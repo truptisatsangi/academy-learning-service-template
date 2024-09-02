@@ -1,0 +1,38 @@
+name: get_price
+author: trupti
+version: 0.1.0
+description: A demonstration of a simple service to fetch price of the token
+aea_version: ">=1.0.0, <2.0.0"
+license: Apache-2.0
+fingerprint: {}
+fingerprint_ignore_patterns: []
+agent: trupti/get_price/0.1.0
+number_of_agents: 4
+deployment: {}
+---
+public_id: valory/get_price-abci:0.1.0
+type: skill
+models:
+  params:
+    args:
+      service_registry_address: null
+      share_tm_config_on_startup: false
+      on_chain_service_id: null
+      setup:
+        all_participants: ${ALL_PARTICIPANTS:list:["0x746B4414858bb8005466569773B0Dc7c249E304e","0x22eEF47188Ed341468c529f799D254AEF00A61bC","0x75C958a42A6a40170170F04C4AcE56Cc11Fa11D4","0x9b17fF2E24A34A2752949AB3FC66F65D18024864"]}
+        safe_contract_address: "0x50020cce503e4e142fE021af46552E326604753a"
+        consensus_threshold: null
+        message: ${GET_PRICE_STRING_0:str:Price of token is ${}}
+  benchmark_tool:
+    args:
+      log_dir: /benchmarks
+---
+public_id: valory/ledger:0.19.0
+type: connection
+config:
+  ledger_apis:
+    ethereum:
+      address: ${SERVICE_HELLO_WORLD_RPC:str:"http://host.docker.internal:8545"}
+      chain_id: 31337
+      poa_chain: false
+      default_gas_price_strategy: eip1559
